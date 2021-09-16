@@ -1,0 +1,62 @@
+import './App.css';
+import * as yup from "yup"
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup'
+
+
+
+function App() {
+    const formSchema = yup.object().shape({
+      name: yup.string().required("Mandatory name"),
+      email: yup.string().required("Mandatory email").email("Email imvalido"),
+      password: yup
+        .string()
+        .required("Mandatory password")
+        .matches("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/", "Password invalid"),
+      passawordComfirmation: yup
+        .string()
+        .required("Mandatory Comfirmation")
+        .oneOf([yup.ref("password"),null],"Passawords must match"),
+      cellphone: yup
+        .string()
+        .required("Mandatory cellphone")
+        .matches("^(\(11\) [9][0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$", "cellphone ivalid"),
+      birthDate: yup
+        .string()
+        .required("Mandatory birth date")
+        .matches("^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$", "Birth Date invalid"),
+      nationality: yup.string().required("Mandatory nationality"),
+    })
+
+  const { register, handleSubmit, formState: { errors }} = useForm({
+    resolver: yupResolver(formSchema)
+  });
+
+  const handleSubmitfunction = (date) => console.log(date)
+
+  console.log(errors)
+
+  return (
+    <div className="App">
+      <form className = "form" onSubmit = {handleSubmit(handleSubmitfunction)}>
+        <input placeholder = "Username" {...register("name")} />
+        {errors.name && errors.name.message}
+        <input placeholder = "Email"{...register("email")}/>
+        {errors.email && errors.email.message}
+        <input placeholder = "Password"{...register("password")}/>
+        {errors.password && errors.password.message}
+        <input placeholder = "Password comfirmation"{...register("passawordComfirmation")}/>
+        {errors.passawordComfirmation && errors.passawordComfirmation.message}
+        <input placeholder = "Cellphone ex: (00) 00000-0000"{...register("cellphone")}/>
+        {errors.cellphone && errors.cellphone.message}
+        <input placeholder = "Birth date ex: DD/MM/YYYY"{...register("birthDate")}/>
+        {errors.birthDate && errors.birthDate.message}
+        <input placeholder = "Nationality" {...register("nationality")}/>
+        {errors.nationality && errors.nationality.message}
+        <button type = "subimt"> Enviar </button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
