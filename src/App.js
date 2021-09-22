@@ -12,7 +12,7 @@ function App() {
       password: yup
         .string()
         .required("Mandatory password")
-        .matches("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/", "Password invalid"),
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, "senha invalida"),
       passawordComfirmation: yup
         .string()
         .required("Mandatory Comfirmation")
@@ -20,11 +20,11 @@ function App() {
       cellphone: yup
         .string()
         .required("Mandatory cellphone")
-        .matches("^(\(11\) [9][0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$", "cellphone ivalid"),
+        .matches(/^(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})$/, "cellphone ivalid"),
       birthDate: yup
         .string()
         .required("Mandatory birth date")
-        .matches("^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$", "Birth Date invalid"),
+        .matches(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, "Birth Date invalid"),
       nationality: yup.string().required("Mandatory nationality"),
     })
 
@@ -43,7 +43,7 @@ function App() {
         {errors.name && errors.name.message}
         <input placeholder = "Email"{...register("email")}/>
         {errors.email && errors.email.message}
-        <input placeholder = "Password"{...register("password")}/>
+        <input placeholder = "Password(8 caracteres,letras, numeros e caracter especial)"{...register("password")}/>
         {errors.password && errors.password.message}
         <input placeholder = "Password comfirmation"{...register("passawordComfirmation")}/>
         {errors.passawordComfirmation && errors.passawordComfirmation.message}
