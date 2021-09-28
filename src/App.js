@@ -1,11 +1,12 @@
 import './App.css';
 import * as yup from "yup"
 import { useForm } from "react-hook-form"
-import { yupResolver } from '@hookform/resolvers/yup'
-
+import { yupResolver } from "@hookform/resolvers/yup"
+ 
 
 
 function App() {
+  
     const formSchema = yup.object().shape({
       name: yup.string().required("Mandatory name"),
       email: yup.string().required("Mandatory email").email("Email imvalido"),
@@ -20,7 +21,7 @@ function App() {
       cellphone: yup
         .string()
         .required("Mandatory cellphone")
-        .matches(/^(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})$/, "cellphone ivalid"),
+        .matches(/^(\([0-9]{2}\))\s([0-9]{1})?([0-9]{4})-([0-9]{4})$/, "cellphone ivalid"),
       birthDate: yup
         .string()
         .required("Mandatory birth date")
