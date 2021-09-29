@@ -2,10 +2,14 @@ import './App.css';
 import * as yup from "yup"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useState } from 'react';
  
 
 
 function App() {
+
+  const [istrue, setIsTrue] = useState(true)
+  const [form, setForm] = useState({}); 
   
     const formSchema = yup.object().shape({
       name: yup.string().required("Mandatory name"),
@@ -33,12 +37,16 @@ function App() {
     resolver: yupResolver(formSchema)
   });
 
-  const handleSubmitfunction = (date) => console.log(date)
+  const handleSubmitfunction = (date) => {
+    setIsTrue(false);
+    setForm(date);
+  }
 
   console.log(errors)
 
   return (
     <div className="App">
+      {istrue ? (
       <form className = "form" onSubmit = {handleSubmit(handleSubmitfunction)}>
         <input placeholder = "Username" {...register("name")} />
         {errors.name && errors.name.message}
@@ -56,6 +64,14 @@ function App() {
         {errors.nationality && errors.nationality.message}
         <button type = "subimt"> Enviar </button>
       </form>
+      ):(<div>
+            <h1>Name: {form.name}</h1>
+            <h1>Email: {form.email}</h1>
+            <h1>Callphonr: {form.cellphone}</h1>
+            <h1>Birth date: {form.birthDate}</h1>
+            <h1>Vationality: {form.nationality}</h1>
+       </div>
+      )}
     </div>
   );
 }
